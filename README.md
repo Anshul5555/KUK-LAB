@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Kurukshetra Univ Electronics Lab Simulators</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@600&family=Roboto:wght@300&display=swap');
+
+  @keyframes pastelShift {
+    0% {
+      background-position: 0% 50%;
+      --bg1: #a3cef1;
+      --bg2: #c8def2;
+      --bg3: #c4cdef;
+      --bg4: #d9e2f9;
+    }
+    25% {
+      background-position: 100% 50%;
+      --bg1: #b3d0f5;
+      --bg2: #a9d4f7;
+      --bg3: #b4cbe7;
+      --bg4: #c6d7f8;
+    }
+    50% {
+      background-position: 100% 40%;
+      --bg1: #b8d4f1;
+      --bg2: #c5dffb;
+      --bg3: #d2d8f9;
+      --bg4: #c2d9f5;
+    }
+    75% {
+      background-position: 0% 60%;
+      --bg1: #9bc7f0;
+      --bg2: #aedde8;
+      --bg3: #bdd2ef;
+      --bg4: #c6d7f8;
+    }
+    100% {
+      background-position: 0% 50%;
+      --bg1: #a3cef1;
+      --bg2: #c8def2;
+      --bg3: #c4cdef;
+      --bg4: #d9e2f9;
+    }
+  }
+
+  body, html {
+    margin: 0; padding: 0;
+    height: 100vh;
+    font-family: 'Inter', sans-serif;
+    color: #293241;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(120deg,
+      var(--bg1, #a3cef1), var(--bg2, #c8def2),
+      var(--bg3, #c4cdef), var(--bg4, #d9e2f9));
+    background-size: 400% 400%;
+    animation: pastelShift 60s ease infinite;
+    perspective: 600px;
+  }
+
+  header {
+    margin-top: 40px;
+    margin-bottom: 32px;
+    text-align: center;
+    user-select: none;
+  }
+  header h1 {
+    font-size: 2.8rem;
+    font-weight: 700;
+    line-height: 1.1;
+    margin: 0;
+  }
+  header h2 {
+    font-size: 1.7rem;
+    font-weight: 500;
+    font-style: italic;
+    margin: 4px 0 0 0;
+    letter-spacing: 2.7px;
+  }
+  header h3 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin: 6px 0 0 0;
+    color: #354b7d;
+    text-transform: uppercase;
+    letter-spacing: 4.4px;
+  }
+
+  .button-container {
+    margin-top: 45px; /* Increased vertical spacing from header */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 54px 36px; /* vertical 54px, horizontal 36px */
+    width: 90%;
+    max-width: 1000px;
+    padding-bottom: 68px;
+    z-index: 10;
+    animation: floatButtons 6s ease-in-out infinite alternate;
+    user-select: none;
+  }
+
+  a.button {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 48px;
+    background: linear-gradient(145deg, #d3e4fc, #e9f1ff);
+    border-radius: 60px;
+    color: #12192a;
+    font-weight: 600;
+    font-size: 1.22rem;
+    box-shadow:
+      6px 6px 28px #a9c3e7,
+      -6px -6px 28px #e5f0ff;
+    text-decoration: none;
+    transition:
+      box-shadow 0.35s ease,
+      transform 0.3s ease;
+    cursor: pointer;
+    will-change: transform, box-shadow;
+    overflow: hidden;
+    perspective: 600px;
+  }
+
+  a.button::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border-radius: 60px;
+    pointer-events: none;
+    background: linear-gradient(120deg, rgba(255 255 255 / 0.55), rgba(255 255 255 / 0));
+    opacity: 0.9;
+    z-index: 1;
+    transition: opacity 0.35s ease;
+  }
+
+  a.button:hover::before {
+    opacity: 0.5;
+  }
+
+  a.button:hover {
+    box-shadow:
+      12px 12px 40px #8fa7e6,
+      -12px -12px 40px #c8dbff;
+    transform: scale(1.08) rotateX(8deg) rotateY(-8deg);
+    z-index: 15;
+  }
+
+  a.button:active {
+    transform: scale(0.9) rotateX(2deg) rotateY(2deg);
+    box-shadow:
+      inset 5px 5px 20px #a9c3ef,
+      inset -5px -5px 20px #dce7ff;
+  }
+
+  a.button svg {
+    width: 28px;
+    height: 28px;
+    fill: #1f345e;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+  }
+
+  a.button:hover svg {
+    transform: rotate(18deg) scale(1.15);
+  }
+
+  @keyframes floatButtons {
+    0% { transform: translateY(0);}
+    100% { transform: translateY(-14px);}
+  }
+
+  a.button .ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: #387efa;
+    box-shadow:
+      0 0 15px #387efa,
+      0 0 35px #3b7ffa;
+    opacity: 0.9;
+    transform: scale(0);
+    animation: electricBurst 0.6s ease forwards;
+    pointer-events: none;
+    z-index: 3;
+  }
+  @keyframes electricBurst {
+    0% {
+      transform: scale(0);
+      opacity: 0.9;
+    }
+    80% {
+      transform: scale(7);
+      opacity: 0.3;
+    }
+    100% {
+      transform: scale(9);
+      opacity: 0;
+    }
+  }
+
+  .pulse-container {
+    position: fixed;
+    bottom: 48px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    z-index: 11;
+    width: 90%;
+    max-width: 320px;
+    user-select: none;
+    pointer-events: none;
+  }
+
+  .pulse-text {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #244c9e;
+    text-shadow: 0 0 8px rgba(36, 76, 158, 0.35);
+    margin-bottom: 6px;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .pulse-line-container {
+    width: 100%;
+    overflow: visible;
+  }
+
+  footer {
+    width: 100%;
+    text-align: center;
+    padding: 6px 15px 6px;
+    font-size: 0.68rem;
+    color: #7080a8;
+    font-weight: 300;
+    user-select: none;
+    position: fixed;
+    bottom: 4px;
+    left: 0;
+    font-family: 'Roboto', sans-serif;
+    background: transparent;
+  }
+
+  .floating-container {
+    pointer-events: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    overflow: visible;
+    z-index: 1;
+  }
+
+  .floating-icon {
+    position: absolute;
+    stroke: #7893b1;
+    stroke-width: 1.4;
+    opacity: 0.12;
+    filter: drop-shadow(0 0 3px rgba(120, 147, 177, 0.25));
+    will-change: transform, opacity;
+    transition: opacity 0.3s ease;
+    user-select: none;
+  }
+
+  @keyframes floatSlow {
+    0% { transform: translateY(0) rotate(0deg);}
+    50% { transform: translateY(-24px) rotate(5deg);}
+    100% { transform: translateY(0) rotate(0deg);}
+  }
+  @keyframes floatMedium {
+    0% { transform: translateY(0) rotate(0deg);}
+    50% { transform: translateY(-30px) rotate(-4deg);}
+    100% { transform: translateY(0) rotate(0deg);}
+  }
+  @keyframes floatFast {
+    0% { transform: translateY(0) rotate(0deg);}
+    50% { transform: translateY(-36px) rotate(3deg);}
+    100% { transform: translateY(0) rotate(0deg);}
+  }
+</style>
+</head>
+<body>
+
+<header aria-label="Main page title">
+  <h1>Kurukshetra University</h1>
+  <h2>M.Sc. Electronics Lab Sem-1</h2>
+  <h3>Experiment Simulator</h3>
+</header>
+
+<div class="button-container" role="navigation" aria-label="Simulators and calculators">
+  <a href="calculator1.html" class="button" title="Ohm's Law Calculator" tabindex="0">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 12h18M12 3v18"/></svg>
+    Transistor Amplifier
+  </a>
+  <a href="simulator1.html" class="button" title="RC Circuit Simulator" tabindex="0">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/></svg>
+    IC555 Timer 
+  </a>
+  <a href="calculator2.html" class="button" title="Diode Characteristics Calculator" tabindex="0">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12l7-7 7 7-7 7z"/></svg>
+    Analog Multimeter
+  </a>
+  <a href="simulator2.html" class="button" title="Transistor Amplifier Simulator" tabindex="0">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="6" cy="18" r="2"/><circle cx="18" cy="6" r="2"/><line x1="6" y1="18" x2="18" y2="6"/></svg>
+    OP-Amp based circuits
+  </a>
+  <a href="calculator3.html" class="button" title="AC Voltage Calculator" tabindex="0">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/></svg>
+    AC Voltage Calculator
+  </a>
+  <a href="simulator3.html" class="button" title="Logic Gate Simulator" tabindex="0">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polyline points="1 4 10 12 1 20"/></svg>
+    Logic Gate Simulator
+  </a>
+</div>
+
+<div class="pulse-container" aria-label="Motivational pulse message">
+  <div class="pulse-text">
+   Straight lines hurt in hospitals... but in the lab? They DESTROY us!
+
+  </div>
+  <div class="pulse-line-container" aria-hidden="true">
+    <svg id="waveSVG" viewBox="0 0 320 40" width="260" height="40" fill="none" xmlns="http://www.w3.org/2000/svg" style="overflow: visible;">
+      <path id="wavePath" fill="none" stroke="#1a4bbb" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+    </svg>
+  </div>
+</div>
+
+<footer>
+  Developed & Maintained by Anshul Sharma | Kurukshetra University - M.Sc. Electronics
+</footer>
+
+<script>
+  // Button electric shock burst + redirect
+  document.querySelectorAll('a.button').forEach(button => {
+    button.addEventListener('click', e => {
+      e.preventDefault();
+      if(button.querySelector('.ripple')) return;
+      const ripple = document.createElement('span');
+      ripple.className = 'ripple';
+      const rect = button.getBoundingClientRect();
+      const size = Math.max(rect.width, rect.height);
+      ripple.style.width = ripple.style.height = size + 'px';
+      ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
+      ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
+      button.appendChild(ripple);
+      setTimeout(() => {
+        window.location.href = button.href;
+      }, 700);
+    });
+  });
+
+  const waveforms = [
+    Array.from({length: 31}, (_, i) => [i*10, 20 + 10*Math.sin(i * 2 * Math.PI / 30)]).flat(),
+    Array.from({length: 31}, (_, i) => [i*10, 20 + 10*Math.cos(i * 2 * Math.PI / 30)]).flat(),
+    [0,40,10,36,20,30,30,23,40,19,50,15,60,13,70,10,80,11,90,16,100,23,110,30,120,36,130,38,140,40,150,39,160,37,170,34,180,30,190,25,200,20,210,15,220,12,230,13,240,17,250,23,260,29,270,35,280,38,290,40,300,40],
+    Array.from({length: 31}, (_, i) => [i*10, 20 + 10 * (2 * Math.abs((i/15) % 2 - 1) - 1)]).flat(),
+    Array.from({length: 31}, (_, i) => [i*10, (i%10 < 5) ? 10 : 30]).flat()
+  ];
+
+  let currentWfIndex = 0;
+  const wavePath = document.getElementById('wavePath');
+
+  function toPath(points) {
+    if(points.length < 4) return "";
+    let d = `M${points[0]} ${points[1]}`;
+    for (let i=2; i < points.length; i += 2) {
+      d += ` L${points[i]} ${points[i+1]}`;
+    }
+    return d;
+  }
+
+  function lerp(a, b, t) {
+    return a + (b - a) * t;
+  }
+
+  function morphWave(from, to, progress) {
+    if(from.length !== to.length) return to;
+    const result = [];
+    for(let i=0; i < from.length; i++) {
+      result.push(lerp(from[i], to[i], progress));
+    }
+    return result;
+  }
+
+  function animateWaveform() {
+    const from = waveforms[currentWfIndex];
+    const nextIndex = (currentWfIndex + 1) % waveforms.length;
+    const to = waveforms[nextIndex];
+    const duration = 1000; // faster transition
+    const fps = 60;
+    const totalFrames = duration / (1000 / fps);
+    let frame = 0;
+
+    function frameStep() {
+      frame++;
+      if(frame > totalFrames) {
+        currentWfIndex = nextIndex;
+        requestAnimationFrame(animateWaveform);
+        return;
+      }
+      const t = frame / totalFrames;
+      const interpolated = morphWave(from, to, t);
+      wavePath.setAttribute('d', toPath(interpolated));
+      requestAnimationFrame(frameStep);
+    }
+    frameStep();
+  }
+
+  animateWaveform();
+</script>
+
+</body>
+</html>
